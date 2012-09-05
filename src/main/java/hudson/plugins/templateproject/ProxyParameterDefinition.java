@@ -1,5 +1,6 @@
 package hudson.plugins.templateproject;
 
+import hudson.Extension;
 import hudson.model.Hudson;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
@@ -24,6 +25,20 @@ public class ProxyParameterDefinition extends ParameterDefinition {
         super(name,description);
         this.projectName = projectName;
     }
+
+    @Extension
+    public static class DescriptorImpl extends ParameterDescriptor {
+        @Override
+        public String getDisplayName() {
+            return "Use parameters from another project";
+        }
+
+        @Override
+        public ParameterDefinition newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+            return req.bindJSON(ProxyParameterDefinition.class, formData);
+        }
+    }
+
 
     @Override
     public ParameterValue createValue(StaplerRequest staplerRequest, JSONObject jsonObject) {

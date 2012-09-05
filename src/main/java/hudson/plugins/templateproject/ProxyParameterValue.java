@@ -1,5 +1,6 @@
 package hudson.plugins.templateproject;
 
+import hudson.Extension;
 import hudson.model.ParameterValue;
 import org.kohsuke.stapler.DataBoundConstructor;
 
