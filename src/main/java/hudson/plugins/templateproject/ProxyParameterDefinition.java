@@ -1,29 +1,28 @@
 package hudson.plugins.templateproject;
 
 import hudson.Extension;
-import hudson.model.Hudson;
-import hudson.model.ParameterDefinition;
-import hudson.model.ParameterValue;
-import hudson.model.AbstractProject;
+import hudson.model.*;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.DataBoundConstructor;
+
+import java.util.ArrayList;
 
 public class ProxyParameterDefinition extends ParameterDefinition {
     private String projectName;
 
     @DataBoundConstructor
+    public ProxyParameterDefinition(String projectName, String name, String description) {
+        super(name,description);
+        this.projectName = projectName;
+    }
+
     public ProxyParameterDefinition(String name) {
         super(name);
     }
 
     public ProxyParameterDefinition(String name, String description) {
         super(name, description);
-    }
-
-    public ProxyParameterDefinition(String projectName, String name, String description) {
-        super(name,description);
-        this.projectName = projectName;
     }
 
     @Extension
@@ -65,5 +64,27 @@ public class ProxyParameterDefinition extends ParameterDefinition {
 
     public String getDisplayName() {
         return "Use parameters from another project";
+    }
+
+    public ArrayList getParameters() {
+        ArrayList parameters = new ArrayList();
+
+        ParametersDefinitionProperty projectParams = getProject().getProperty(ParametersDefinitionProperty.class);
+        if(projectParams == null) {
+            return parameters;
+        }
+
+        for(ParameterDefinition parameterDefinition : projectParams.getParameterDefinitions()) {
+            ParameterValue defaultValue = parameterDefinition.getDefaultParameterValue();
+            if( defaultValue == null ) {
+                continue;
+            }
+
+            if (defaultValue instanceof  StringParameterValue) {
+                parameters.add(parameterDefinition);
+            }
+        }
+
+        return parameters;
     }
 }
