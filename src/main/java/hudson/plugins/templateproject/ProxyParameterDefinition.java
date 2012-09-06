@@ -66,8 +66,9 @@ public class ProxyParameterDefinition extends ParameterDefinition {
         return "Use parameters from another project";
     }
 
-    public ArrayList getParameters() {
-        ArrayList parameters = new ArrayList();
+    public ArrayList<ParameterDefinition> getParameters() {
+        System.out.println("getParameters called.");
+        ArrayList<ParameterDefinition> parameters = new ArrayList();
 
         ParametersDefinitionProperty projectParams = getProject().getProperty(ParametersDefinitionProperty.class);
         if(projectParams == null) {
@@ -85,6 +86,12 @@ public class ProxyParameterDefinition extends ParameterDefinition {
             }
         }
 
+        if( parameters instanceof ArrayList ) {
+            System.out.println("ArrayList");
+        }
+
+        System.out.println(parameters.toString());
+        System.out.println(parameters.size());
         return parameters;
     }
 }

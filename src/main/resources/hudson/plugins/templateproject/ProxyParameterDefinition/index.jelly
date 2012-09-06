@@ -2,12 +2,19 @@
 <jelly xmlns="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
     Hello World
     <f:entry>
-        it : "${it}"<br/>
-        it.parameters : "${it.parameters}"<br/>
-        it.parameters.class : "${it.parameters.class}"<br/>
+        it : ${it}<br/>
+        instance : ${instance} <br/>
+        app : ${app} <br/>
+        descriptor : ${descriptor} <br/>
+        it.parameters : ${it.parameters}<br/>
+        it.parameters.class : ${it.class}<br/>
         it.parameters[0].name : "${it.parameters[0].name}"<br/>
+        it.parameters[0].name.class : "${it.parameters[0].name.class}"<br/>
+        it.parameters[0].class : "${it.parameters[0].class}"<br/>
         it.parameters[0].value : "${it.parameters[0].defaultParameterValue.value}"<br/>
+        it.parameters[0].value.class : "${it.parameters[0].defaultParameterValue.value.class}"<br/>
         it.parameters[0].description : "${it.parameters[0].description}"<br/>
+        it.parameters[0].description.class : "${it.parameters[0].description.class}"<br/>
         it.parameters[1].name : "${it.parameters[1].name}"<br/>
         it.parameters[1].value : "${it.parameters[1].defaultParameterValue.value}"<br/>
         it.parameters[1].description : "${it.parameters[1].description}"<br/>
@@ -16,6 +23,7 @@
         it.parameters[2].description : "${it.parameters[2].description}"<br/>
         <label>${it.parameters[0].name} : </label>
         <input value="${it.parameters[0].defaultParameterValue.value}" />
+
     </f:entry>
 
 </jelly>
